@@ -1,5 +1,6 @@
 #!/usr/bin/python3
+alpha = ""
 for i in range(26):
-    alpha = chr(ord("a") + i)
-    if alpha not in "qe":
-        print("{}".format(alpha), end="")
+    if i not in (4, 16):
+        alpha = alpha + chr(ord("a") + i)
+print("{}".format(alpha), end="")
