@@ -8,7 +8,7 @@ last_d = new_n % 10
 if number < 0:
     last_d = last_d * -1
 if last_d > 5:
-    str = "is greater than 5"
+    str = "and is greater than 5"
 elif last_d == 0:
     str = "and is 0"
 else:
