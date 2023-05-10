@@ -2,4 +2,4 @@
 for i in range(26):
     alpha = chr(ord("a") + i)
     if alpha not in "qe":
-        print(alpha, end="")
+        print("{}".format(alpha), end="")
