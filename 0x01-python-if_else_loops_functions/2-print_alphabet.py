@@ -1,3 +1,5 @@
 #!/usr/bin/python3
+alpha = ""
 for i in range(26):
-    print(chr(ord("a") + i), end="")
+    alpha = alpha + chr(ord("a") + i)
+print(alpha, end="")
