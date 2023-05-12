@@ -4,4 +4,4 @@ for i in range(25):
         letter = chr(ord("y") - i)
     else:
         letter = chr(ord("y") - i - 32)
-    print(f"{letter}", end="")
+    print("{}".format(letter), end="")
