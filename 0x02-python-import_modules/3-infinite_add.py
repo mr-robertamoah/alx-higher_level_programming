@@ -5,6 +5,10 @@ if __name__ == "__main__":
     if number_of_arguments == 0:
         print("{}".format(0))
     else:
-        a = int(argv[1])
-        b = int(argv[2])
-        print("{}".format(a + b))
+        i = 0
+        result = 0
+        for a in argv:
+            if i != 0:
+                result += int(a)
+            i += 1
+        print("{}".format(result))
