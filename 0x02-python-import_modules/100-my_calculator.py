@@ -11,7 +11,7 @@ if __name__ == "__main__":
     op = argv[2]
     b = int(argv[3])
 
-    result = 0;
+    result = 0
     if op == "+":
         result = add(a, b)
     elif op == "-":
