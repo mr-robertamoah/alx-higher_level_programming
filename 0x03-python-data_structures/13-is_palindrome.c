@@ -17,6 +17,9 @@ int is_palindrome(listint_t **head)
 	int stack[100];
 	int top = -1;
 
+	if (fast == NULL)
+		return (1);
+
 	while (fast && fast->next)
 	{
 		stack[++top] = slow->n;
