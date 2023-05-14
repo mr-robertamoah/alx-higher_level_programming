@@ -6,9 +6,9 @@ def max_integer(my_list=[]):
         You are not allowed to import any module
         You are not allowed to use the builtin max()
     """
-    max_int = 0
     if isinstance(my_list, list) and len(my_list) > 0:
-        for i in my_list:
-            if i == 0 or i > max_int:
-                max_int = i
+        max_int = 0
+        for i in range(len(my_list)):
+            if i == 0 or my_list[i] > max_int:
+                max_int = my_list[i]
         return max_int
