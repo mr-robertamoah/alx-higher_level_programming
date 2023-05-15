@@ -13,6 +13,8 @@ int main(void)
 
     head = NULL;
     add_nodeint_end(&head, 10);
+    add_nodeint_end(&head, 60);
+    add_nodeint_end(&head, 14);
     add_nodeint_end(&head, 10);
     print_listint(head);
 

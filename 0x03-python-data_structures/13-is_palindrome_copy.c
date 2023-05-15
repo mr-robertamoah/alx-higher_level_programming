@@ -34,18 +34,23 @@ listint_t *add_node(listint_t **head, int n)
 
 listint_t *reverse_list(listint_t *node)
 {
-	listint_t *head;
-	listint_t *tmp;
+	listint_t *tmp, *next, *prev;
 
-	head = NULL;
-	tmp = node;
-	while (tmp != NULL)
+	tmp = NULL;
+	while (node != NULL)
 	{
-		tmp = node->next;
-		node->next = NULL;
-		add_node(&head, node->n);
+		next = node->next;
+		if (next)
+		{
+			prev = tmp;
+			tmp = next;
+			tmp->next = prev;
+		}
+		else
+			tmp->next = next;
+		node = next;
 	}
-	return (head);
+	return (tmp);
 }
 
 /**
@@ -60,29 +65,21 @@ int is_palindrome(listint_t **head)
  * An empty list is considered a palindrome
  */
 	listint_t *node;
-	listint_t *second_node;
 	listint_t *tmp;
 
-	if (*head == NULL)
+	if (*head == NULL || (*head)->next == NULL)
 		return (1);
 
 	node = *head;
+	tmp = reverse_list( node);
 	while (node != NULL)
 	{
-		second_node = reverse_list(node);
-		tmp = second_node;
-		while (tmp != NULL)
+		if (tmp->n != node->n)
 		{
-			if (tmp->n != node->n)
-			{
-				free_listint(second_node);
-				return (0);
-			}
-			tmp = tmp->next;
+			return (0);
 		}
+		tmp = tmp->next;
 		node = node->next;
 	}
-	free_listint(second_node);
-	free_listint(node);
 	return (1);
 }
