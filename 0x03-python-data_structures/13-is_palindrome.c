@@ -13,32 +13,32 @@ int is_palindrome(listint_t **head)
  * 0 if it is not a palindrome, 1 if it is a palindrome
  * An empty list is considered a palindrome
  */
-	listint_t *slow = *head, *fast = *head;
 	int stack[100];
-	int top = -1;
+	int size = 0, mid = 0, i = 0;
+	listint_t *node = NULL;
 
-	if (fast == NULL)
+	if (*head == NULL || (*head)->next == NULL)
 		return (1);
 
-	while (fast && fast->next)
+	node = *head;
+	while (node != NULL)
 	{
-		stack[++top] = slow->n;
-		slow = slow->next;
-		fast = fast->next->next;
+		stack[size] = node->n;
+		size++;
+		node = node->next;
 	}
 
-	if (fast)
-	{
-		slow = slow->next;
-	}
+	if (size % 2 != 0)
+		mid = (size + 1) / 2;
+	else
+		mid = size / 2;
 
-	while (slow)
+	while (i != mid)
 	{
-		if (stack[top--] != slow->n)
-		{
+		if (stack[i] != stack[size - 1 - i])
 			return (0);
-		}
-		slow = slow->next;
+		i++;
 	}
+
 	return (1);
 }
