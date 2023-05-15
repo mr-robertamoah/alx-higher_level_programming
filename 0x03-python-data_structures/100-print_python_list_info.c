@@ -9,10 +9,12 @@
 */
 void print_python_list_info(PyObject *p)
 {
-	int size = 0, i = 0;
+	long int size = 0;
+	int i = 0;
+	PyObject *obj;
 
 	size = Py_SIZE(p);
-	printf("[*] Size of the Python List = %d\n", size);
+	printf("[*] Size of the Python List = %l\n", size);
 	printf("[*] Allocated = %d\n", ((PyListObject *)p)->allocated);
 
 	while (i < size)
