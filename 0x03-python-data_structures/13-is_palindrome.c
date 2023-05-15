@@ -13,7 +13,7 @@ int is_palindrome(listint_t **head)
  * 0 if it is not a palindrome, 1 if it is a palindrome
  * An empty list is considered a palindrome
  */
-	int stack[100];
+	int *stack = NULL;
 	int size = 0, mid = 0, i = 0;
 	listint_t *node = NULL;
 
@@ -23,8 +23,16 @@ int is_palindrome(listint_t **head)
 	node = *head;
 	while (node != NULL)
 	{
-		stack[size] = node->n;
 		size++;
+		node = node->next;
+	}
+
+	stack = malloc(sizeof(int) * size);
+	node = *head;
+	while (node != NULL)
+	{
+		stack[i] = node->n;
+		i++;
 		node = node->next;
 	}
 
@@ -33,12 +41,17 @@ int is_palindrome(listint_t **head)
 	else
 		mid = size / 2;
 
+	i = 0;
 	while (i != mid)
 	{
 		if (stack[i] != stack[size - 1 - i])
+		{
+			free(stack);
 			return (0);
+		}
 		i++;
 	}
 
+	free(stack);
 	return (1);
 }
