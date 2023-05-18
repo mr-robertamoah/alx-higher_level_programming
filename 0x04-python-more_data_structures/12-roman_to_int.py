@@ -26,31 +26,41 @@ def roman_to_int(roman_string):
     if roman_string in ones_dict:
         return ones_dict[roman_string]
 
-    sum_r = 0
     thous = 0
     hund = 0
     tens = 0
     ones = 0
-    for k, v in thous_dict.items():
-        if k in roman_string:
-            thous = v
-            roman_string.replace(k, "")
-            break
-    for k, v in hund_dict.items():
-        if k in roman_string:
-            hund = v
-            roman_string.replace(k, "")
-            break
-    for k, v in tens_dict.items():
-        if k in roman_string:
-            tens = v
-            roman_string.replace(k, "")
-            break
-    for k, v in ones_dict.items():
-        if k == roman_string:
-            ones = v
-            break
-        if k in roman_string:
-            ones = v
-    sum_r = thous + hund + tens + ones
-    return sum_r
+    r_str = rem = c = ""
+    for c in roman_string:
+        r_str += c
+        if r_str in thous_dict:
+            thous = thous_dict[r_str]
+            rem = r_str
+    if rem:
+        roman_string = roman_string[len(rem):]
+
+    r_str = rem = c = ""
+    for c in roman_string:
+        r_str += c
+        if r_str in hund_dict:
+            hund = hund_dict[r_str]
+            rem = r_str
+    if rem:
+        roman_string = roman_string[len(rem):]
+
+    r_str = rem = c = ""
+    for c in roman_string:
+        r_str += c
+        if r_str in tens_dict:
+            tens = tens_dict[r_str]
+            rem = r_str
+    if rem:
+        roman_string = roman_string[len(rem):]
+
+    r_str = rem = c = ""
+    for c in roman_string:
+        r_str += c
+        if r_str in ones_dict:
+            ones = ones_dict[r_str]
+
+    return thous + hund + tens + ones
