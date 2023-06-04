@@ -1,0 +1,66 @@
+The ``2-matrix_divided`` module
+============================
+
+Using ``matrix_divided``
+---------------------
+
+This is a 2-matrix_divided text file in reStructuredText format.
+
+First import ``matrix_divided`` from the ``2-matrix_divided`` module:
+::
+
+    >>> matrix_divided = __import__("2-matrix_divided").matrix_divided
+
+Now use it:
+::
+
+    >>> matrix_divided([[1, 2], [3, 4]], 2)
+    [[0.5, 1.0], [1.5, 2.0]]
+
+Throws a TypeError when first argument is not a list:
+::
+
+    >>> matrix_divided((1, 2), 2)
+    Traceback (most recent call last):
+    ...
+    TypeError: matrix must be a matrix (list of lists) of integers/floats
+
+Throws a TypeError when first argument is a list containing lists of different lengths:
+::
+
+    >>> matrix_divided([[1, 2], [1, 2, 3]], 2)
+    Traceback (most recent call last):
+    ...
+    TypeError: Each row of the matrix must have the same size
+
+Throws a TypeError when first argument is not a list:
+::
+
+    >>> matrix_divided((1, 2), 2)
+    Traceback (most recent call last):
+    ...
+    TypeError: matrix must be a matrix (list of lists) of integers/floats
+
+Throws a TypeError when first argument is a list of lists that has a non int or non float element:
+::
+
+    >>> matrix_divided([[3, 4], [1, 2], ["a", 5]], 2)
+    Traceback (most recent call last):
+    ...
+    TypeError: matrix must be a matrix (list of lists) of integers/floats
+
+Throws a TypeError when second argument is not an int or float:
+::
+
+    >>> matrix_divided([[3, 4], [1, 2]], "2")
+    Traceback (most recent call last):
+    ...
+    TypeError: div must be a number
+
+Throws a TypeError when second argument is zero
+::
+
+    >>> matrix_divided([[3, 4], [1, 2]], 0)
+    Traceback (most recent call last):
+    ...
+    TypeError: division by zero

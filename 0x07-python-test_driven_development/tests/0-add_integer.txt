@@ -1,12 +1,14 @@
 The ``0-add_integer`` module
-======================
+============================
 
 Using ``add_integer``
--------------------
+---------------------
 
-This is an example text file in reStructuredText format.  First import
-``add_integer`` from the ``0-add_integer`` module:
+This is a 0-add_integer text file in reStructuredText format.
+
+First import ``add_integer`` from the ``0-add_integer`` module:
 ::
+
     >>> add_integer = __import__("0-add_integer").add_integer
 
 Now use it:
@@ -23,6 +25,7 @@ Argument b in ``add_integer(a, b)`` has a default value of 98:
 
 Allows for negative numbers:
 ::
+
     >>> add_integer(-1, 1)
     0
 
@@ -31,6 +34,7 @@ Allows for negative numbers:
 
 Allows for float numbers:
 ::
+
     >>> add_integer(1.55, 1)
     2
 
