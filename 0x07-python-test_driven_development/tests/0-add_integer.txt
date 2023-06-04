@@ -67,3 +67,10 @@ Throws ValueError when float nan is passed:
     ...
     ValueError: cannot convert float NaN to integer
 
+Throws TypeError when no argument is provided:
+::
+
+    >>> add_integer()
+    Traceback (most recent call last):
+    ...
+    TypeError: add_integer() missing 1 required positional argument: 'a'

@@ -64,3 +64,19 @@ Throws a TypeError when second argument is zero
     Traceback (most recent call last):
     ...
     TypeError: division by zero
+
+Throws TypeError when no argument is provided:
+::
+
+    >>> matrix_divided()
+    Traceback (most recent call last):
+    ...
+    TypeError: matrix_divided() missing 2 required positional arguments: 'matrix' and 'div'
+
+Throws TypeError when second argument is not provided:
+::
+
+    >>> matrix_divided([])
+    Traceback (most recent call last):
+    ...
+    TypeError: matrix_divided() missing 1 required positional argument: 'div'
