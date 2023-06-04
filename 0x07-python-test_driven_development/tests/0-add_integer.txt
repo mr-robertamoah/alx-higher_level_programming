@@ -1,0 +1,65 @@
+The ``0-add_integer`` module
+======================
+
+Using ``add_integer``
+-------------------
+
+This is an example text file in reStructuredText format.  First import
+``add_integer`` from the ``0-add_integer`` module:
+::
+    >>> add_integer = __import__("0-add_integer").add_integer
+
+Now use it:
+::
+
+    >>> add_integer(1, 1)
+    2
+
+Argument b in ``add_integer(a, b)`` has a default value of 98:
+::
+
+    >>> add_integer(0)
+    98
+
+Allows for negative numbers:
+::
+    >>> add_integer(-1, 1)
+    0
+
+    >>> add_integer(-1, -1)
+    -2
+
+Allows for float numbers:
+::
+    >>> add_integer(1.55, 1)
+    2
+
+Throws TypeError when non ints and non floats are used:
+::
+
+    >>> add_integer("1", 1)
+    Traceback (most recent call last):
+    ...
+    TypeError: a must be an integer
+
+    >>> add_integer(1, "1")
+    Traceback (most recent call last):
+    ...
+    TypeError: b must be an integer
+
+Throws OverflowError when float infinity is passed:
+::
+
+    >>> add_integer(float('inf'), 1)
+    Traceback (most recent call last):
+    ...
+    OverflowError: cannot convert float infinity to integer
+
+Throws ValueError when float nan is passed:
+::
+
+    >>> add_integer(float('nan'), 1)
+    Traceback (most recent call last):
+    ...
+    ValueError: cannot convert float NaN to integer
+
