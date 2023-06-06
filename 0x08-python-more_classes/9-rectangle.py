@@ -164,3 +164,11 @@ class Rectangle():
         """
 
         return cls(size, size)
+
+    def __repr__(self):
+        """
+        Returns a string representation of the class
+
+        """
+
+        return f"Rectangle({self.__width}, {self.__height})"
