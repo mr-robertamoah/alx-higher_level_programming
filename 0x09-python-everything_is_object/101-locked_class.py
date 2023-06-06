@@ -22,6 +22,6 @@ class LockedClass:
         """ Overrides the __setattr__ """
 
         if name != 'first_name':
-            raise AttributeError(f"'LockedClass' object has no attribute "
-                                 "'{name}'")
+            raise AttributeError("'LockedClass' object has no attribute "
+                                 "'{}'".format(name))
         super().__setattr__(name, value)
