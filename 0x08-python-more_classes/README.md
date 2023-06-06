@@ -4,4 +4,4 @@
 
 This deals with concepts such as
 - __str__
-- __rep__
+- __repr__
