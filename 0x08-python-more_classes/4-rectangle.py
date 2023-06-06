@@ -109,11 +109,13 @@ class Rectangle():
         """
         f_str = ""
         if self.__width == 0 or self.__height == 0:
-            return f"{f_str}\n"
+            return f"{f_str}"
 
         hash_str = "#"
         for i in range(self.__height):
-            f_str += f"{hash_str * self.__width}\n"
+            f_str += f"{hash_str * self.__width}"
+            if i + 1 != self.__height:
+                f_str += "\n"
 
         return f_str
 
