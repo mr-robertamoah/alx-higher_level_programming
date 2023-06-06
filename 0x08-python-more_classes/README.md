@@ -5,3 +5,4 @@
 This deals with concepts such as
 - __str__
 - __repr__
+- __del__
