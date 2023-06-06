@@ -4,8 +4,6 @@ The ``0-add_integer`` module
 Using ``add_integer``
 ---------------------
 
-This is a 0-add_integer text file in reStructuredText format.
-
 First import ``add_integer`` from the ``0-add_integer`` module:
 ::
 
