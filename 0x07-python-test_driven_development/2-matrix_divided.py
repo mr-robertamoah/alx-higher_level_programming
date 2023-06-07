@@ -1,4 +1,4 @@
-#!/usr/bin/python4
+#!/usr/bin/python3
 
 """
 Contains matrix_divided function that divides the elements of a function
