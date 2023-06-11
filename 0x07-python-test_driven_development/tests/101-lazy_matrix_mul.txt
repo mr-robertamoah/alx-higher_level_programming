@@ -1,0 +1,122 @@
+Testing ``100-matrix_mul`` module
+=================================
+
+Testing ``matrix_mul`` function
+-------------------------------
+
+Import function from module:
+::
+
+    >>> import numpy as np
+    >>> matrix_mul = np.matmul
+
+How to use function:
+::
+
+    >>> matrix_mul([[1, 2], [3, 4]], [[1, 2], [3, 4]])
+    array([[ 7, 10],
+           [15, 22]])
+    >>> matrix_mul([[1, 2]], [[3, 4], [5, 6]])
+    array([[13, 16]])
+    
+Arguments must be two:
+::
+
+    >>> matrix_mul([[1, 3]])
+    Traceback (most recent call last):
+    ...
+    TypeError: matmul() takes from 2 to 3 positional arguments but 1 were given
+
+    >>> matrix_mul()
+    Traceback (most recent call last):
+    ...
+    TypeError: matmul() takes from 2 to 3 positional arguments but 0 were given
+
+Arguments must be lists:
+::
+
+    >>> matrix_mul("m_a", [[1, 2]])
+    Traceback (most recent call last):
+    ...
+    numpy.core._exceptions._UFuncNoLoopError: ufunc 'matmul' did not contain a loop with signature matching types (dtype('<U3'), dtype('int64')) -> None
+
+    >>> matrix_mul([[1, 2]], "m_b")
+    Traceback (most recent call last):
+    ...
+    numpy.core._exceptions._UFuncNoLoopError: ufunc 'matmul' did not contain a loop with signature matching types (dtype('int64'), dtype('<U3')) -> None
+
+Arguments cannot be empty list:
+::
+
+    >>> matrix_mul([], [[1, 2]])
+    Traceback (most recent call last):
+    ...
+    ValueError: matmul: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (n?,k),(k,m?)->(n?,m?) (size 1 is different from 0)
+
+    >>> matrix_mul([[]], [[1, 2]])
+    Traceback (most recent call last):
+    ...
+    ValueError: matmul: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (n?,k),(k,m?)->(n?,m?) (size 1 is different from 0)
+
+    >>> matrix_mul([[1, 2]], [])
+    Traceback (most recent call last):
+    ...
+    ValueError: matmul: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (n?,k),(k,m?)->(n?,m?) (size 0 is different from 2)
+
+    >>> matrix_mul([[1, 2]], [[]])
+    Traceback (most recent call last):
+    ...
+    ValueError: matmul: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (n?,k),(k,m?)->(n?,m?) (size 1 is different from 2)
+
+Arguments must be a list of lists:
+::
+
+    >>> matrix_mul([[1, 2], "m_a"], [[1, 2]])
+    Traceback (most recent call last):
+    ...
+    ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+    >>> matrix_mul([[1, 2]], [[1, 2], "m_b"])
+    Traceback (most recent call last):
+    ...
+    ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+
+Arguments must be list of lists containing ints and floats:
+::
+
+    >>> matrix_mul([[1, 2], ["m_a"], [1, 2]], [[1, 2]])
+    Traceback (most recent call last):
+    ...
+    ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (3,) + inhomogeneous part.
+
+    >>> matrix_mul([[1, 2]], [[1, 2], [1, 2], ["m_b"]])
+    Traceback (most recent call last):
+    ...
+    ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (3,) + inhomogeneous part.
+
+Arguments must be lists containing lists of the same length:
+::
+
+    >>> matrix_mul([[1, 2], [3], [1, 2]], [[1, 2]])
+    Traceback (most recent call last):
+    ...
+    ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (3,) + inhomogeneous part.
+
+    >>> matrix_mul([[1, 2]], [[1, 2], [1, 2], [3]])
+    Traceback (most recent call last):
+    ...
+    ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (3,) + inhomogeneous part.
+
+Multiplication is only possible if number of columns of m_a
+is not equal to the number of rows of m_b:
+::
+
+    >>> matrix_mul([[1, 2], [3, 5], [1, 2]], [[1, 2], [3, 4], [5, 6]])
+    Traceback (most recent call last):
+    ...
+    ValueError: matmul: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (n?,k),(k,m?)->(n?,m?) (size 3 is different from 2)
+
+    >>> matrix_mul([[1, 2], [1, 2]], [[1, 5]])
+    Traceback (most recent call last):
+    ...
+    ValueError: matmul: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (n?,k),(k,m?)->(n?,m?) (size 1 is different from 2)
