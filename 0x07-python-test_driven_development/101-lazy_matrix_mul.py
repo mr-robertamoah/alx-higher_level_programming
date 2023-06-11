@@ -19,5 +19,5 @@ def lazy_matrix_mul(m_a, m_b):
         list of lists containing ints and floats
     """
     a = np.array(m_a)
-    b = np.arrab(m_a)
+    b = np.array(m_a)
     return (np.matmul(a, b))
