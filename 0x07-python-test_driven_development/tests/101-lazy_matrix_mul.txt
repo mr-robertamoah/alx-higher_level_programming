@@ -25,12 +25,12 @@ Arguments must be two:
     >>> matrix_mul([[1, 3]])
     Traceback (most recent call last):
     ...
-    TypeError: matmul() takes from 2 to 3 positional arguments but 1 were given
+    TypeError: matmul() missing required argument 'b' (pos 2)
 
     >>> matrix_mul()
     Traceback (most recent call last):
     ...
-    TypeError: matmul() takes from 2 to 3 positional arguments but 0 were given
+    TypeError: matmul() missing required argument 'a' (pos 1)
 
 Arguments must be lists:
 ::
@@ -38,12 +38,12 @@ Arguments must be lists:
     >>> matrix_mul("m_a", [[1, 2]])
     Traceback (most recent call last):
     ...
-    numpy.core._exceptions._UFuncNoLoopError: ufunc 'matmul' did not contain a loop with signature matching types (dtype('<U3'), dtype('int64')) -> None
+    ValueError: Scalar operands are not allowed, use '*' instead
 
     >>> matrix_mul([[1, 2]], "m_b")
     Traceback (most recent call last):
     ...
-    numpy.core._exceptions._UFuncNoLoopError: ufunc 'matmul' did not contain a loop with signature matching types (dtype('int64'), dtype('<U3')) -> None
+    ValueError: Scalar operands are not allowed, use '*' instead
 
 Arguments cannot be empty list:
 ::
@@ -51,22 +51,22 @@ Arguments cannot be empty list:
     >>> matrix_mul([], [[1, 2]])
     Traceback (most recent call last):
     ...
-    ValueError: matmul: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (n?,k),(k,m?)->(n?,m?) (size 1 is different from 0)
+    ValueError: shapes (0,) and (1,2) not aligned: 0 (dim 0) != 1 (dim 0)
 
     >>> matrix_mul([[]], [[1, 2]])
     Traceback (most recent call last):
     ...
-    ValueError: matmul: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (n?,k),(k,m?)->(n?,m?) (size 1 is different from 0)
+    ValueError: shapes (1,0) and (1,2) not aligned: 0 (dim 1) != 1 (dim 0)
 
     >>> matrix_mul([[1, 2]], [])
     Traceback (most recent call last):
     ...
-    ValueError: matmul: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (n?,k),(k,m?)->(n?,m?) (size 0 is different from 2)
+    ValueError: shapes (1,2) and (0,) not aligned: 2 (dim 1) != 0 (dim 0)
 
     >>> matrix_mul([[1, 2]], [[]])
     Traceback (most recent call last):
     ...
-    ValueError: matmul: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (n?,k),(k,m?)->(n?,m?) (size 1 is different from 2)
+    ValueError: shapes (1,2) and (1,0) not aligned: 2 (dim 1) != 1 (dim 0)
 
 Arguments must be a list of lists:
 ::
@@ -74,12 +74,12 @@ Arguments must be a list of lists:
     >>> matrix_mul([[1, 2], "m_a"], [[1, 2]])
     Traceback (most recent call last):
     ...
-    ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+    ValueError: setting an array element with a sequence
 
     >>> matrix_mul([[1, 2]], [[1, 2], "m_b"])
     Traceback (most recent call last):
     ...
-    ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
+    ValueError: setting an array element with a sequence
 
 Arguments must be list of lists containing ints and floats:
 ::
@@ -87,12 +87,12 @@ Arguments must be list of lists containing ints and floats:
     >>> matrix_mul([[1, 2], ["m_a"], [1, 2]], [[1, 2]])
     Traceback (most recent call last):
     ...
-    ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (3,) + inhomogeneous part.
+    ValueError: setting an array element with a sequence
 
     >>> matrix_mul([[1, 2]], [[1, 2], [1, 2], ["m_b"]])
     Traceback (most recent call last):
     ...
-    ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (3,) + inhomogeneous part.
+    ValueError: setting an array element with a sequence
 
 Arguments must be lists containing lists of the same length:
 ::
@@ -100,12 +100,12 @@ Arguments must be lists containing lists of the same length:
     >>> matrix_mul([[1, 2], [3], [1, 2]], [[1, 2]])
     Traceback (most recent call last):
     ...
-    ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (3,) + inhomogeneous part.
+    ValueError: setting an array element with a sequence
 
     >>> matrix_mul([[1, 2]], [[1, 2], [1, 2], [3]])
     Traceback (most recent call last):
     ...
-    ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (3,) + inhomogeneous part.
+    ValueError: setting an array element with a sequence
 
 Multiplication is only possible if number of columns of m_a
 is not equal to the number of rows of m_b:
@@ -114,9 +114,9 @@ is not equal to the number of rows of m_b:
     >>> matrix_mul([[1, 2], [3, 5], [1, 2]], [[1, 2], [3, 4], [5, 6]])
     Traceback (most recent call last):
     ...
-    ValueError: matmul: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (n?,k),(k,m?)->(n?,m?) (size 3 is different from 2)
+    ValueError: shapes (3,2) and (3,2) not aligned: 2 (dim 1) != 3 (dim 0)
 
     >>> matrix_mul([[1, 2], [1, 2]], [[1, 5]])
     Traceback (most recent call last):
     ...
-    ValueError: matmul: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (n?,k),(k,m?)->(n?,m?) (size 1 is different from 2)
+    ValueError: shapes (2,2) and (1,2) not aligned: 2 (dim 1) != 1 (dim 0)
