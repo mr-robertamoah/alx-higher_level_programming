@@ -19,7 +19,7 @@ void print_python_string(PyObject *p)
 
 	len = ((PyASCIIObject *) (p))->length;
 
-	if (PyUnicode_KIND(obj) == PyUnicode_1BYTE_KIND)
+	if (PyUnicode_KIND(p) == PyUnicode_1BYTE_KIND)
 		printf("  type: compact ascii\n");
 	else
 		printf("  type: compact unicode object\n");
