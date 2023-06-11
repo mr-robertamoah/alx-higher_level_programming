@@ -24,9 +24,6 @@ def matrix_mul(m_a, m_b):
     if not isinstance(m_a, list):
         raise TypeError("m_a must be a list")
 
-    if not isinstance(m_b, list):
-        raise TypeError("m_b must be a list")
-
     if len(m_a) == 0:
         raise ValueError("m_a can't be empty")
 
@@ -47,6 +44,9 @@ def matrix_mul(m_a, m_b):
         if column_track != number_of_columns:
             raise TypeError("each row of m_a must be of the same size")
     number_of_columns_m_a = number_of_columns
+
+    if not isinstance(m_b, list):
+        raise TypeError("m_b must be a list")
 
     if len(m_b) == 0:
         raise ValueError("m_b can't be empty")
