@@ -74,12 +74,12 @@ Arguments must be a list of lists:
     >>> matrix_mul([[1, 2], "m_a"], [[1, 2]])
     Traceback (most recent call last):
     ...
-    ValueError: setting an array element with a sequence
+    ValueError: setting an array element with a sequence.
 
     >>> matrix_mul([[1, 2]], [[1, 2], "m_b"])
     Traceback (most recent call last):
     ...
-    ValueError: setting an array element with a sequence
+    ValueError: setting an array element with a sequence.
 
 Arguments must be list of lists containing ints and floats:
 ::
@@ -92,7 +92,7 @@ Arguments must be list of lists containing ints and floats:
     >>> matrix_mul([[1, 2]], [[1, 2], [1, 2], ["m_b"]])
     Traceback (most recent call last):
     ...
-    ValueError: setting an array element with a sequence
+    ValueError: setting an array element with a sequence.
 
 Arguments must be lists containing lists of the same length:
 ::
