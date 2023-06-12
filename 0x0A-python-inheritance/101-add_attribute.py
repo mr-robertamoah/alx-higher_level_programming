@@ -10,8 +10,8 @@ def add_attribute(obj, name, value):
     cls = obj.__class__
     slots = getattr(cls, "__slots__", None)
 
-    if not hasattr(cls, "__dict__") or\
+    if not hasattr(obj, "__dict__") or\
        isinstance(obj, (int, float, str, tuple, frozenset)):
         raise TypeError("can't add new attribute")
 
-    obj.__dict__[name] = value
+    setattr(obj, name, value)
