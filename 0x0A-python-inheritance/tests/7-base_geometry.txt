@@ -94,6 +94,18 @@ Call integer_validator with non integer value:
 	...
 	TypeError: set must be an integer
 
+	TypeError: frozenset must be an integer
+
+	>>> b.integer_validator("bytes", b"bytes")
+	Traceback (most recent call last):
+	...
+	TypeError: bytes must be an integer
+
+	>>> b.integer_validator("bytearrays", bytearray(b"bytes"))
+	Traceback (most recent call last):
+	...
+	TypeError: bytearrays must be an integer
+
 Call integer_validator with an integer equal to 0
 ::
 
