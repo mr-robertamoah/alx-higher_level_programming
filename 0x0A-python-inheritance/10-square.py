@@ -14,10 +14,12 @@ class Square(Rectangle):
 
     def __init__(self, size):
         """ Initializes private attributes """
+        self.integer_validator("size", size)
+
         super().__init__(size, size)
 
         self.__size = size
 
     def area(self):
-        """ Calculates the area of the Rectangle """
+        """ Calculates the area of the Square """
         return (self.__size * self.__size)
