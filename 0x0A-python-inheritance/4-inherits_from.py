@@ -12,7 +12,7 @@ def inherits_from(obj, a_class):
     """
 
     for cls in type(obj).__mro__:
-        if not cls is a_class and issubclass(cls, a_class):
+        if cls is not a_class and issubclass(cls, a_class):
             return True
 
     return False
