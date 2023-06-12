@@ -25,7 +25,7 @@ Call area method:
 Call integer_validator with no arguments:
 ::
 
-	>>> base_g.integer_validator()
+	>> base_g.integer_validator()
 	Traceback (most recent call last):
 	...
 	TypeError: BaseGeometry.integer_validator() missing 2 required positional arguments: 'name' and 'value'
@@ -33,7 +33,7 @@ Call integer_validator with no arguments:
 Call integer_validator with one argument:
 ::
 
-	>>> base_g.integer_validator("hey")
+	>> base_g.integer_validator("hey")
 	Traceback (most recent call last):
 	...
 	TypeError: BaseGeometry.integer_validator() missing 1 required positional argument: 'value'
