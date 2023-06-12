@@ -58,6 +58,14 @@ Call integer_validator with non integer value:
 	Traceback (most recent call last):
 	...
 	TypeError: name must be an integer
+	>>> b.integer_validator("bool", True)
+	Traceback (most recent call last):
+        ...
+        TypeError: bool must be an integer
+	>>> b.integer_validator("float", 1.5)
+        Traceback (most recent call last):
+        ...
+        TypeError: float must be an integer
 
 Call integer_validator with an integer equal to 0
 ::
