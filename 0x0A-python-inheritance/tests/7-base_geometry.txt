@@ -58,7 +58,6 @@ Call integer_validator with non integer value:
 	Traceback (most recent call last):
 	...
 	TypeError: name must be an integer
-	
 
 Call integer_validator with an integer equal to 0
 ::
