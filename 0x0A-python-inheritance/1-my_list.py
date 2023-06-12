@@ -14,4 +14,4 @@ class MyList(list):
         """
         Prints list in sorted form
         """
-        print(sorted(self))
+        print(sorted(self.copy()))
