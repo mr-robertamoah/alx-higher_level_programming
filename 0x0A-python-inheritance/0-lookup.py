@@ -5,6 +5,7 @@ Contains the lookup function that returns attributes
 of an object
 """
 
+
 def lookup(obj):
     """
     Returns the all available attributes on obj
