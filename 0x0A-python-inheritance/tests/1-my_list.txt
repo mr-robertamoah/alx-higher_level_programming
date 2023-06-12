@@ -56,6 +56,7 @@ Checking for all negative numbers:
     [-10, -8, -7, -2, -1]
     >>> print(my_list)
     [-10, -1, -7, -2, -8]
+
 Checking for too many arguments:
 ::
 
