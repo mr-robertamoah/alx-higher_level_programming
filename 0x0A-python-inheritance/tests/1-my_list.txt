@@ -33,6 +33,7 @@ reverse my_list:
 ::
 
     >>> my_list.reverse()
+    >>> print(my_list)
     [5, 3, 2, 4, 1]
     
 Check for negative numbers:
