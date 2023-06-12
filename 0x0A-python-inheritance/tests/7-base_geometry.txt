@@ -57,14 +57,22 @@ Call integer_validator with non integer value:
 	>>> base_g.integer_validator("name", "john")
 	Traceback (most recent call last):
 	...
-	TypeError: <name> must be an integer
+	TypeError: name must be an integer
 	
 
-Call integer_validator with an integer less than or equal to 0:
+Call integer_validator with an integer equal to 0
+::
+
+	>>> base_g.integer_validator("amount", 0)
+	Traceback (most recent call last):
+	...
+	ValueError: amount must be greater than 0
+
+Call integer_validator with an integer less than 0:
 ::
 
 	>>> base_g.integer_validator("amount", -2)
 	Traceback (most recent call last):
 	...
-	ValueError: <name> must be greater than 0
+	ValueError: amount must be greater than 0
 
