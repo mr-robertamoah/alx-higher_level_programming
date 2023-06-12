@@ -29,6 +29,12 @@ using my_list:
     >>> print(my_list)
     [1, 4, 2, 3, 5]
 
+reverse my_list:
+::
+
+    >>> my_list.reverse()
+    [5, 3, 2, 4, 1]
+    
 Check for negative numbers:
 ::
 
