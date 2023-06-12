@@ -58,30 +58,37 @@ Call integer_validator with non integer value:
 	Traceback (most recent call last):
 	...
 	TypeError: name must be an integer
-	>>> base_g.integer_validator("bool", True)
+
+	>>> base_g.integer_validator("bool", False)
 	Traceback (most recent call last):
         ...
         TypeError: bool must be an integer
-	>>> base_g.integer_validator("float", 1.5)
+
+	>>> base_g.integer_validator("float", 5.6)
         Traceback (most recent call last):
         ...
 	TypeError: float must be an integer
+
 	>>> base_g.integer_validator("complex", complex(1, 1))
 	Traceback (most recent call last):
 	...
 	TypeError: complex must be an integer
-	>>> base_g.integer_validator("tuple", (1, 2))
+
+	>>> base_g.integer_validator("tuple", (1, ))
 	Traceback (most recent call last):
 	...
 	TypeError: tuple must be an integer
-	>>> base_g.integer_validator("list", [1, 2, 3])
+
+	>>> base_g.integer_validator("list", [1, 2, 3, 4])
 	Traceback (most recent call last):
 	...
 	TypeError: list must be an integer
+
 	>>> base_g.integer_validator("dict", {"key": "value"})
 	Traceback (most recent call last):
 	...
 	TypeError: dict must be an integer
+
 	>>> base_g.integer_validator("set", {"hello", "world"})
 	Traceback (most recent call last):
 	...
@@ -103,3 +110,10 @@ Call integer_validator with an integer less than 0:
 	...
 	ValueError: amount must be greater than 0
 
+Call integer_validator with more arguments:
+::
+
+	>>> base_g.integer_validator("amount", 2, 199)
+	Traceback (most recent call last):
+	...
+	TypeError: integer_validator() takes 3 positional arguments but 4 were given
