@@ -16,6 +16,9 @@ def write_file(filename="", text=""):
 
     nb_chars = 0
 
+    if not isinstance(text, str):
+        return nb_chars
+
     with open(filename, "w", encoding="utf-8") as file:
         nb_chars = file.write(text)
 
