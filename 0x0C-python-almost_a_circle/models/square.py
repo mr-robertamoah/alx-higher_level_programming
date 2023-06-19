@@ -10,7 +10,7 @@ from models.rectangle import Rectangle
 class Square(Rectangle):
     """ A Base with a __init__ method """
 
-    def __init__ (self, size, x=0, y=0, id=None):
+    def __init__(self, size, x=0, y=0, id=None):
         """
         initializing class or instance attributes
 
@@ -71,4 +71,3 @@ class Square(Rectangle):
         square_dict["x"] = self.x
         square_dict["y"] = self.y
         return square_dict
-

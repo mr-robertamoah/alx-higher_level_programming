@@ -155,7 +155,7 @@ class BaseTest(unittest.TestCase):
         self.assertIsInstance(json_string, str)
         self.assertEqual(json_string, "[]")
 
-    def test_to_json_string_returns_none_when_called_with_neither_list_nor_none(self):
+    def test_to_json_string_returns_none_when_with_neither_list_nor_none(self):
         """ testing to_json_string static method """
 
         json_string = Base.to_json_string(1)
@@ -194,8 +194,12 @@ class BaseTest(unittest.TestCase):
 
         r = Rectangle(1, 3)
         json_string = Base.to_json_string([r.to_dictionary()])
-        self.assertEqual(json_string, Rectangle.to_json_string([r.to_dictionary()]))
-        self.assertEqual(json_string, Square.to_json_string([r.to_dictionary()]))
+        self.assertEqual(
+                         json_string,
+                         Rectangle.to_json_string([r.to_dictionary()]))
+        self.assertEqual(
+                         json_string,
+                         Square.to_json_string([r.to_dictionary()]))
 
     # save_to_file ------------------------------------------
 
@@ -270,13 +274,22 @@ class BaseTest(unittest.TestCase):
         with self.assertRaises(TypeError) as ctx:
             Base.save_to_file([], [])
 
-    def test_the_use_of_one_base_object_list_as_argument(self):
+    def test_the_use_of_one_object_list_as_argument(self):
         """ testing save_to_file class method """
 
         r = Rectangle(1, 2)
         Rectangle.save_to_file([r])
         with open("Rectangle.json", "r") as file:
             self.assertEqual(file.read(), json.dumps([r.to_dictionary()]))
+
+    def test_cannot_use_base_class_object_in_list_as_argument(self):
+        """ testing save_to_file class method """
+
+        r2 = Base(3)
+        with self.assertRaises(AttributeError):
+            Rectangle.save_to_file([r2])
+            with open("Rectangle.json", "r") as file:
+                self.assertEqual(file.read(), json.dumps([r2.to_dictionary()]))
 
     def test_the_use_of_multiple_same_base_object_list_as_argument(self):
         """ testing save_to_file class method """
@@ -285,24 +298,26 @@ class BaseTest(unittest.TestCase):
         r2 = Rectangle(3, 4)
         Rectangle.save_to_file([r1, r2])
         with open("Rectangle.json", "r") as file:
-            self.assertEqual(file.read(), json.dumps([
-							 r1.to_dictionary(),
-                                                         r2.to_dictionary()
-                                                     ]))
+            self.assertEqual(
+                             file.read(),
+                             json.dumps([
+                                         r1.to_dictionary(),
+                                         r2.to_dictionary()]))
 
-    def test_the_use_of_multiple_same_base_object_list_as_argument(self):
+    def test_the_use_of_multiple_differemt_base_object_list_as_argument(self):
         """ testing save_to_file class method """
 
         r1 = Rectangle(1, 2)
         r2 = Square(3, 4)
         Rectangle.save_to_file([r1, r2])
         with open("Rectangle.json", "r") as file:
-            self.assertEqual(file.read(), json.dumps([
-							 r1.to_dictionary(),
-                                                         r2.to_dictionary()
-                                                     ]))
+            self.assertEqual(
+                             file.read(),
+                             json.dumps([
+                                         r1.to_dictionary(),
+                                         r2.to_dictionary()]))
 
-    def test_the_use_of_multiple_different_base_object_list_as_argument(self):
+    def test_the_use_of_multiple_different_objects_list_as_argument(self):
         """ testing save_to_file class method """
 
         r1 = Rectangle(1, 2)
@@ -364,6 +379,298 @@ class BaseTest(unittest.TestCase):
         r = frozenset({1, 3})
         with self.assertRaises(AttributeError) as ctx:
             Rectangle.save_to_file(r)
+
+    # from_json_string ------------------------------
+
+    def test_from_json_string_cannot_be_called_with_no_arguments(self):
+        """ testing from_json_string static method """
+
+        with self.assertRaises(TypeError) as ctx:
+            string = Base.from_json_string()
+
+    def tes_cannot_be_called_with_more_than_one_argument(self):
+        """ testing from_json_string static method """
+
+        with self.assertRaises(TypeError) as ctx:
+            string = Base.from_json_string("[]", "[]")
+
+    def test_can_call_from_json_string_with_empty_string(self):
+        """ testing from_json_string static method """
+
+        string = Base.from_json_string("")
+        self.assertEqual(string, [])
+
+    def test_can_call_from_json_string_with_none(self):
+        """ testing from_json_string static method """
+
+        string = Base.from_json_string(None)
+        self.assertEqual(string, [])
+
+    def test_can_call_from_json_string_with_json_list(self):
+        """ testing from_json_string static method """
+
+        r1 = Rectangle(1, 2)
+        r2 = Rectangle(3, 4)
+        json_string = Base.to_json_string([
+                                           r1.to_dictionary(),
+                                           r2.to_dictionary()])
+        json_list = Base.from_json_string(json_string)
+        self.assertEqual(
+                         json_string,
+                         json.dumps([
+                                     r1.to_dictionary(),
+                                     r2.to_dictionary()]))
+        self.assertEqual(
+                         json_list,
+                         [
+                          r1.to_dictionary(),
+                          r2.to_dictionary()])
+
+    def test_using_non_strings_can_call_from_json_string(self):
+        """ testing from_json_string static method """
+
+        with self.assertRaises(TypeError) as ctx:
+            string = Base.from_json_string(1)
+
+        with self.assertRaises(TypeError) as ctx:
+            string = Base.from_json_string(1.2)
+
+        with self.assertRaises(TypeError) as ctx:
+            string = Base.from_json_string([1, 2])
+
+        with self.assertRaises(TypeError) as ctx:
+            string = Base.from_json_string((1, ))
+
+        with self.assertRaises(TypeError) as ctx:
+            string = Base.from_json_string({1, 2})
+
+        with self.assertRaises(TypeError) as ctx:
+            string = Base.from_json_string({"a": 1})
+
+        with self.assertRaises(TypeError) as ctx:
+            string = Base.from_json_string(frozenset({1, 2}))
+
+    def test_using_json_of_non_lists_can_call_from_json_string(self):
+        """ testing from_json_string static method """
+
+        item = "1"
+        output = Base.from_json_string(json.dumps(item))
+        self.assertEqual(output, item)
+
+        item = 1
+        output = Base.from_json_string(json.dumps(item))
+        self.assertEqual(output, item)
+
+        item = 1.5
+        output = Base.from_json_string(json.dumps(item))
+        self.assertEqual(output, item)
+
+        item = {"a": 1}
+        output = Base.from_json_string(json.dumps(item))
+        self.assertEqual(output, item)
+
+        item = [1, 2]
+        output = Base.from_json_string(json.dumps(item))
+        self.assertEqual(output, item)
+
+        item = (1, )
+        output = Base.from_json_string(json.dumps(item))
+        self.assertNotEqual(output, item)
+
+    def test_different_classes_can_call_from_json_string(self):
+        """ testing from_json_string static method """
+
+        string = Base.from_json_string(None)
+        self.assertEqual(string, [])
+
+        string = Rectangle.from_json_string(None)
+        self.assertEqual(string, [])
+
+        string = Square.from_json_string(None)
+        self.assertEqual(string, [])
+
+    # create class method -----------------------------------
+
+    def test_cannot_create_with_positional_arguments(self):
+        """ testing create class method """
+
+        with self.assertRaises(TypeError):
+            rectangle = Rectangle.create(1, 2)
+
+    def test_can_create_without_an_argument(self):
+        """ testing create class method """
+
+        rectangle = Rectangle.create()
+        self.assertIsInstance(rectangle, Rectangle)
+
+    def test_can_create_rectangle_from_dictionary(self):
+        """ testing create class method """
+
+        r = Rectangle(10, 10)
+        dictionary = r.to_dictionary()
+        rectangle = Rectangle.create(**dictionary)
+        self.assertIsInstance(rectangle, Rectangle)
+        self.assertEqual(r.id, rectangle.id)
+
+    def test_can_create_square_from_dictionary(self):
+        """ testing create class method """
+
+        r = Rectangle(10, 10)
+        dictionary = r.to_dictionary()
+        square = Square.create(**dictionary)
+        self.assertIsInstance(square, Square)
+        self.assertEqual(r.id, square.id)
+
+    def test_can_create_base_from_dictionary(self):
+        """ testing create class method """
+
+        r = Rectangle(10, 10)
+        dictionary = r.to_dictionary()
+        base = Base.create(**dictionary)
+        self.assertIsInstance(base, Base)
+        self.assertEqual(r.id, base.id)
+
+    def test_cannot_create_with_non_dictionary_argument(self):
+        """ testing create class method """
+
+        with self.assertRaises(TypeError):
+            Rectangle.create(1)
+
+        with self.assertRaises(TypeError):
+            Rectangle.create(1.4)
+
+        with self.assertRaises(TypeError):
+            Rectangle.create("hey")
+
+        with self.assertRaises(TypeError):
+            Rectangle.create((1, ))
+
+        with self.assertRaises(TypeError):
+            Rectangle.create([1, 2])
+
+        with self.assertRaises(TypeError):
+            Rectangle.create({1, 2})
+
+        with self.assertRaises(TypeError):
+            Rectangle.create(frozenset({1, 2}))
+
+        with self.assertRaises(TypeError):
+            Rectangle.create(complex(1))
+
+    # load_from_file -------------------------------
+
+    def test_cannot_call_load_from_file_with_arguments(self):
+        """ testing load_from_file class method """
+
+        with self.assertRaises(TypeError):
+            Base.load_from_file([])
+
+    def test_cannot_save_to_or_load_from_file_depends_on_base_class(self):
+        """ testing load_from_file class method """
+
+        r = Base(1)
+        with self.assertRaises(AttributeError):
+            Base.save_to_file([r])
+            items = Base.load_from_file()
+            self.assertIsInstance(items, list)
+            for i in items:
+                self.assertIsInstance(i, Base)
+
+    def test_can_create_instance_of_different_type(self):
+        """ testing load_from_file class method """
+
+        r = Rectangle(1, 2)
+        self.assertIsInstance(r, Rectangle)
+        Square.save_to_file([r])
+        items = Square.load_from_file()
+        self.assertIsInstance(items, list)
+        for i in items:
+            self.assertIsInstance(i, Square)
+
+        r = Square(1, 2)
+        self.assertIsInstance(r, Square)
+        Rectangle.save_to_file([r])
+        items = Rectangle.load_from_file()
+        self.assertIsInstance(items, list)
+        for i in items:
+            self.assertIsInstance(i, Rectangle)
+
+    def test_instances_of_load_from_file_depend_on_class_used(self):
+        """ testing load_from_file class method """
+
+        r = Base(1)
+        with open("Base.json", "w") as file:
+            dictionary = {}
+            dictionary["id"] = r.id
+            json.dump([dictionary], file)
+
+        items = Base.load_from_file()
+        self.assertIsInstance(items, list)
+        for i in items:
+            self.assertIsInstance(i, Base)
+
+        r = Rectangle(1, 2)
+        Rectangle.save_to_file([r])
+        items = Rectangle.load_from_file()
+        self.assertIsInstance(items, list)
+        for i in items:
+            self.assertIsInstance(i, Rectangle)
+
+        r = Square(1, 2)
+        Square.save_to_file([r])
+        items = Square.load_from_file()
+        self.assertIsInstance(items, list)
+        for i in items:
+            self.assertIsInstance(i, Square)
+
+        r1 = Rectangle(1, 2)
+        r2 = Square(1, 2)
+        Square.save_to_file([r1, r2])
+        items = Square.load_from_file()
+        self.assertIsInstance(items, list)
+        for i in items:
+            self.assertIsInstance(i, (Rectangle, Square))
+
+    def test_call_load_from_file_returns_empty_list_if_there_is_no_file(self):
+        """ testing load_from_file class method """
+
+        filename = "Rectangle.json"
+        if os.path.exists(filename):
+            os.remove(filename)
+
+        item = Rectangle.load_from_file()
+        self.assertIsInstance(item, list)
+        self.assertEqual(len(item), 0)
+
+    def test_call_load_from_file_returns_empty_list_if_there_is_no_file(self):
+        """ testing load_from_file class method """
+
+        filename = "Rectangle.json"
+        with open(filename, "w") as file:
+            json.dump(1, file)
+        with self.assertRaises(TypeError):
+            Rectangle.load_from_file()
+
+        with open(filename, "w") as file:
+            json.dump(1.4, file)
+        with self.assertRaises(TypeError):
+            Rectangle.load_from_file()
+
+        with open(filename, "w") as file:
+            json.dump("string", file)
+        with self.assertRaises(TypeError):
+            Rectangle.load_from_file()
+
+        with open(filename, "w") as file:
+            json.dump((1, ), file)
+        with self.assertRaises(TypeError):
+            Rectangle.load_from_file()
+
+        with open(filename, "w") as file:
+            json.dump({"a": 1}, file)
+        with self.assertRaises(TypeError):
+            Rectangle.load_from_file()
+
 
 if __name__ == "__main__":
     unittest.main()

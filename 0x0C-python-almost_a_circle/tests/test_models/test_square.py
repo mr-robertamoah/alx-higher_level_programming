@@ -492,7 +492,7 @@ class SquareTest(unittest.TestCase):
         self.assertEqual(r.x, 2)
         self.assertEqual(r.y, 1)
 
-    def test_can_call_update_with_positional_before_ignored_named_arguments(self):
+    def test_update_with_positional_before_ignored_named_arguments(self):
         """ testing update instance method """
 
         r = Square(10, 10, 10, 10)
@@ -573,9 +573,7 @@ class SquareTest(unittest.TestCase):
         r1 = Square(1, 1, 1, 1)
         r1.update(**r_dict)
         self.assertEqual(r1.to_dictionary(), r_dict)
-        
 
-    # --------------------------------------
 
 if __name__ == "__main__":
     unittest.main()

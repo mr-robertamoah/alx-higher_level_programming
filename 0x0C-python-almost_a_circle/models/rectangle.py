@@ -10,7 +10,7 @@ from models.base import Base
 class Rectangle(Base):
     """ A Base with a __init__ method """
 
-    def __init__ (self, width, height, x=0, y=0, id=None):
+    def __init__(self, width, height, x=0, y=0, id=None):
         """
         initializing class or instance attributes
 
@@ -133,7 +133,8 @@ class Rectangle(Base):
     def __str__(self):
         """ return a string representation of this instance """
 
-        return f"[Rectangle] ({self.id}) {self.x}/{self.y} - {self.width}/{self.height}"
+        return f"[Rectangle] ({self.id}) {self.x}/{self.y} - \
+                 {self.width}/{self.height}"
 
     def update(self, *args, **kwargs):
         """ update attributes of an instance in a certain order """
@@ -172,4 +173,3 @@ class Rectangle(Base):
         rectangle_dict["x"] = self.x
         rectangle_dict["y"] = self.y
         return rectangle_dict
-

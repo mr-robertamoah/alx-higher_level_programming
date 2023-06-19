@@ -638,7 +638,7 @@ class RectangleTest(unittest.TestCase):
 
     # display --------------------------------------
 
-    def test_cannot_display_rectangle_when_method_is_called_with_arguments(self):
+    def test_cannot_display_when_method_is_called_with_arguments(self):
         """ test the display method of an instance """
 
         with self.assertRaises(TypeError) as ctx:
@@ -1088,9 +1088,7 @@ class RectangleTest(unittest.TestCase):
         r1 = Rectangle(1, 1, 1, 1, 1)
         r1.update(**r_dict)
         self.assertEqual(r1.to_dictionary(), r_dict)
-        
 
-    # --------------------------------------
 
 if __name__ == "__main__":
     unittest.main()

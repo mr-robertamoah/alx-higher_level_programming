@@ -5,6 +5,7 @@ Contains a Base class
 """
 
 import json
+import os
 
 
 class Base():
@@ -12,7 +13,7 @@ class Base():
 
     __nb_objects = 0
 
-    def __init__ (self, id=None):
+    def __init__(self, id=None):
         """
         initializing class or method attributes
 
@@ -58,3 +59,31 @@ class Base():
             return []
 
         return json.loads(json_string)
+
+    @classmethod
+    def create(cls, **dictionary):
+        """ create an instance of the class """
+
+        if issubclass(cls, Base):
+            if cls.__name__ == "Base":
+                return Base(dictionary.get("id", None))
+
+            if cls.__name__ == "Square":
+                obj = cls(1)
+            else:
+                obj = cls(1, 1)
+
+            obj.update(**dictionary)
+            return obj
+
+    @classmethod
+    def load_from_file(cls):
+        """ load, create and return a list of instances from file """
+
+        filename = f"{cls.__name__}.json"
+        if not os.path.exists(filename):
+            return []
+
+        with open(filename, "r") as file:
+            dictionary_list = json.load(file)
+            return [cls.create(**i) for i in dictionary_list]
