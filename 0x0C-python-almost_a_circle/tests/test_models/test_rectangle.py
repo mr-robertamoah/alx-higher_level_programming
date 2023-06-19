@@ -44,7 +44,7 @@ class RectangleTest(unittest.TestCase):
         self.assertEqual(rectangle.y, 0)
         self.assertEqual(rectangle.id, 10)
 
-    # setter and getter for with -------------------------------
+    # setter and getter for width -------------------------------
     def test_setting_and_getting_width(self):
         """
         check if Rectangle's width instance variable can be set and got
@@ -138,7 +138,55 @@ class RectangleTest(unittest.TestCase):
         with self.assertRaises(TypeError) as ctx:
             rectangle.width = {"a": 1.1}
         self.assertEqual(str(ctx.exception), "width must be an integer")
-    # do for set frozenset nan 0 less than 0
+
+    def test_cannot_set_width_with_a_set(self):
+        """ test dealing the setting of width with non int """
+
+        with self.assertRaises(TypeError) as ctx:
+            rectangle = Rectangle({1, 2}, 2)
+        self.assertEqual(str(ctx.exception), "width must be an integer")
+
+        rectangle = Rectangle(1, 2)
+        with self.assertRaises(TypeError) as ctx:
+            rectangle.width = {1, 2}
+        self.assertEqual(str(ctx.exception), "width must be an integer")
+
+    def test_cannot_set_width_with_a_frozenset(self):
+        """ test dealing the setting of width with non int """
+
+        with self.assertRaises(TypeError) as ctx:
+            rectangle = Rectangle(frozenset({1, 2}), 2)
+        self.assertEqual(str(ctx.exception), "width must be an integer")
+
+        rectangle = Rectangle(1, 2)
+        with self.assertRaises(TypeError) as ctx:
+            rectangle.width = frozenset({1, 2})
+        self.assertEqual(str(ctx.exception), "width must be an integer")
+
+    def test_cannot_set_width_with_a_negative_number(self):
+        """ test dealing with setting width with to int less or equal to 0 """
+
+        with self.assertRaises(ValueError) as ctx:
+            rectangle = Rectangle(-1, 2)
+        self.assertEqual(str(ctx.exception), "width must be > 0")
+
+        rectangle = Rectangle(1, 2)
+        with self.assertRaises(ValueError) as ctx:
+            rectangle.width = -1
+        self.assertEqual(str(ctx.exception), "width must be > 0")
+
+    def test_cannot_set_width_with_zero(self):
+        """ test dealing with setting width with to int less or equal to 0 """
+
+        with self.assertRaises(ValueError) as ctx:
+            rectangle = Rectangle(0, 2)
+        self.assertEqual(str(ctx.exception), "width must be > 0")
+
+        rectangle = Rectangle(1, 2)
+        with self.assertRaises(ValueError) as ctx:
+            rectangle.width = 0
+        self.assertEqual(str(ctx.exception), "width must be > 0")
+
     # setter and getter for height --------------------------------------
 
     def test_setting_and_getting_height(self):
@@ -234,6 +282,54 @@ class RectangleTest(unittest.TestCase):
         with self.assertRaises(TypeError) as ctx:
             rectangle.height = {"a": 1.1}
         self.assertEqual(str(ctx.exception), "height must be an integer")
+
+    def test_cannot_set_height_with_a_set(self):
+        """ test dealing the setting of height with non int """
+
+        with self.assertRaises(TypeError) as ctx:
+            rectangle = Rectangle(1, {1, 2}, 2)
+        self.assertEqual(str(ctx.exception), "height must be an integer")
+
+        rectangle = Rectangle(1, 2)
+        with self.assertRaises(TypeError) as ctx:
+            rectangle.height = {1, 2}
+        self.assertEqual(str(ctx.exception), "height must be an integer")
+
+    def test_cannot_set_height_with_a_frozenset(self):
+        """ test dealing the setting of height with non int """
+
+        with self.assertRaises(TypeError) as ctx:
+            rectangle = Rectangle(1, frozenset({1, 2}), 2)
+        self.assertEqual(str(ctx.exception), "height must be an integer")
+
+        rectangle = Rectangle(1, 2)
+        with self.assertRaises(TypeError) as ctx:
+            rectangle.height = frozenset({1, 2})
+        self.assertEqual(str(ctx.exception), "height must be an integer")
+
+    def test_cannot_set_height_with_a_negative_number(self):
+        """ test dealing with setting height with to int less or equal to 0 """
+
+        with self.assertRaises(ValueError) as ctx:
+            rectangle = Rectangle(1, -1, 2)
+        self.assertEqual(str(ctx.exception), "height must be > 0")
+
+        rectangle = Rectangle(1, 2)
+        with self.assertRaises(ValueError) as ctx:
+            rectangle.height = -1
+        self.assertEqual(str(ctx.exception), "height must be > 0")
+
+    def test_cannot_set_height_with_zero(self):
+        """ test dealing with setting height with to int less or equal to 0 """
+
+        with self.assertRaises(ValueError) as ctx:
+            rectangle = Rectangle(1, 0, 2)
+        self.assertEqual(str(ctx.exception), "height must be > 0")
+
+        rectangle = Rectangle(1, 2)
+        with self.assertRaises(ValueError) as ctx:
+            rectangle.height = 0
+        self.assertEqual(str(ctx.exception), "height must be > 0")
 
     # setter and getter for x --------------------------------------
 
@@ -331,6 +427,52 @@ class RectangleTest(unittest.TestCase):
             rectangle.x = {"a": 1.1}
         self.assertEqual(str(ctx.exception), "x must be an integer")
 
+    def test_cannot_set_x_with_a_set(self):
+        """ test dealing the setting of x with non int """
+
+        with self.assertRaises(TypeError) as ctx:
+            rectangle = Rectangle(1, 1, {1, 2}, 2)
+        self.assertEqual(str(ctx.exception), "x must be an integer")
+
+        rectangle = Rectangle(1, 2)
+        with self.assertRaises(TypeError) as ctx:
+            rectangle.x = {1, 2}
+        self.assertEqual(str(ctx.exception), "x must be an integer")
+
+    def test_cannot_set_x_with_a_frozenset(self):
+        """ test dealing the setting of x with non int """
+
+        with self.assertRaises(TypeError) as ctx:
+            rectangle = Rectangle(1, 1, frozenset({1, 2}), 2)
+        self.assertEqual(str(ctx.exception), "x must be an integer")
+
+        rectangle = Rectangle(1, 2)
+        with self.assertRaises(TypeError) as ctx:
+            rectangle.x = frozenset({1, 2})
+        self.assertEqual(str(ctx.exception), "x must be an integer")
+
+    def test_cannot_set_x_with_a_negative_number(self):
+        """ test dealing with setting x with to int less or equal to 0 """
+
+        with self.assertRaises(ValueError) as ctx:
+            rectangle = Rectangle(1, 1, -1, 2)
+        self.assertEqual(str(ctx.exception), "x must be >= 0")
+
+        rectangle = Rectangle(1, 2)
+        with self.assertRaises(ValueError) as ctx:
+            rectangle.x = -1
+        self.assertEqual(str(ctx.exception), "x must be >= 0")
+
+    def test_cannot_set_x_with_zero(self):
+        """ test dealing with setting x with to int less or equal to 0 """
+
+        rectangle = Rectangle(1, 1, 0, 1)
+        self.assertEqual(rectangle.x, 0)
+
+        rectangle = Rectangle(1, 2, 2, 2)
+        rectangle.x = 0
+        self.assertEqual(rectangle.x, 0)
+
     # setter and getter for y --------------------------------------
 
     def test_setting_and_getting_y(self):
@@ -426,6 +568,52 @@ class RectangleTest(unittest.TestCase):
         with self.assertRaises(TypeError) as ctx:
             rectangle.y = {"a": 1.1}
         self.assertEqual(str(ctx.exception), "y must be an integer")
+
+    def test_cannot_set_y_with_a_set(self):
+        """ test dealing the setting of y with non int """
+
+        with self.assertRaises(TypeError) as ctx:
+            rectangle = Rectangle(1, 1, 1, {1, 2}, 2)
+        self.assertEqual(str(ctx.exception), "y must be an integer")
+
+        rectangle = Rectangle(1, 2)
+        with self.assertRaises(TypeError) as ctx:
+            rectangle.y = {1, 2}
+        self.assertEqual(str(ctx.exception), "y must be an integer")
+
+    def test_cannot_set_y_with_a_frozenset(self):
+        """ test dealing the setting of y with non int """
+
+        with self.assertRaises(TypeError) as ctx:
+            rectangle = Rectangle(1, 1, 1, frozenset({1, 2}), 2)
+        self.assertEqual(str(ctx.exception), "y must be an integer")
+
+        rectangle = Rectangle(1, 2)
+        with self.assertRaises(TypeError) as ctx:
+            rectangle.y = frozenset({1, 2})
+        self.assertEqual(str(ctx.exception), "y must be an integer")
+
+    def test_cannot_set_y_with_a_negative_number(self):
+        """ test dealing with setting y with to int less or equal to 0 """
+
+        with self.assertRaises(ValueError) as ctx:
+            rectangle = Rectangle(1, 1, 1, -1, 2)
+        self.assertEqual(str(ctx.exception), "y must be >= 0")
+
+        rectangle = Rectangle(1, 2)
+        with self.assertRaises(ValueError) as ctx:
+            rectangle.y = -1
+        self.assertEqual(str(ctx.exception), "y must be >= 0")
+
+    def test_cannot_set_y_with_zero(self):
+        """ test dealing with setting y with to int less or equal to 0 """
+
+        rectangle = Rectangle(1, 1, 1, 0)
+        self.assertEqual(rectangle.y, 0)
+
+        rectangle = Rectangle(1, 2, 2, 2)
+        rectangle.y = 0
+        self.assertEqual(rectangle.y, 0)
 
     # area --------------------------------------
 
@@ -851,6 +1039,56 @@ class RectangleTest(unittest.TestCase):
 
         with self.assertRaises(TypeError) as ctx:
             r.update(x="1", id=2)
+
+    # to_dictionary --------------------------------------
+
+    def test_can_return_dictionary_rep_of_instance(self):
+        """ testing to_dictionary instance method """
+
+        r = Rectangle(10, 10, 10, 10, 10)
+        r_dict = r.to_dictionary()
+        self.assertIsInstance(r_dict, dict)
+
+    def test_to_dictionary_dict_has_five_keys(self):
+        """ testing to_dictionary instance method """
+
+        r = Rectangle(10, 10, 10, 10, 10)
+        r_dict = r.to_dictionary()
+        self.assertEqual(len(r_dict), 5)
+
+    def test_to_dictionary_dict_contains_only_specified_keys(self):
+        """ testing to_dictionary instance method """
+
+        r = Rectangle(10, 10, 10, 10, 10)
+        r_dict = r.to_dictionary()
+
+        check_dict = {"id": 10, "width": 10, "height": 10, "x": 10, "y": 10}
+        for key, value in check_dict.items():
+            self.assertEqual(value, r_dict[key])
+
+    def test_to_dictionary_cannot_be_called_with_arguments(self):
+        """ testing to_dictionary instance method """
+
+        r = Rectangle(10, 10, 10, 10, 10)
+        self.assertEqual(r.id, 10)
+        self.assertEqual(r.width, 10)
+        self.assertEqual(r.height, 10)
+        self.assertEqual(r.x, 10)
+        self.assertEqual(r.y, 10)
+
+        with self.assertRaises(TypeError) as ctx:
+            r.to_dictionary(2)
+
+    def test_two_or_more_rectangles_can_have_equal_dict_reps(self):
+        """ testing to_dictionary instance method """
+
+        r = Rectangle(10, 10, 10, 10, 10)
+        r_dict = r.to_dictionary()
+
+        r1 = Rectangle(1, 1, 1, 1, 1)
+        r1.update(**r_dict)
+        self.assertEqual(r1.to_dictionary(), r_dict)
+        
 
     # --------------------------------------
 
