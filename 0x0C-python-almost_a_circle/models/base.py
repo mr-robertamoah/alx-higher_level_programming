@@ -85,5 +85,8 @@ class Base():
             return []
 
         with open(filename, "r") as file:
-            dictionary_list = json.load(file)
-            return [cls.create(**i) for i in dictionary_list]
+            json_string = file.read()
+
+            dict_list = cls.from_json_string(json_string)
+
+            return [cls.create(**i) for i in dict_list]
