@@ -133,8 +133,8 @@ class Rectangle(Base):
     def __str__(self):
         """ return a string representation of this instance """
 
-        return f"[Rectangle] ({self.id}) {self.x}/{self.y} - \
-                 {self.width}/{self.height}"
+        return f"[Rectangle] ({self.id}) {self.x}/{self.y} - "\
+               f"{self.width}/{self.height}"
 
     def update(self, *args, **kwargs):
         """ update attributes of an instance in a certain order """
