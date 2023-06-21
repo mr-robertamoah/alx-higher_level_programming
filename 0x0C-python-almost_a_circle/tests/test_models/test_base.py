@@ -283,11 +283,23 @@ class BaseTest(unittest.TestCase):
         with self.assertRaises(TypeError) as ctx:
             Base.save_to_file()
 
+        with self.assertRaises(TypeError) as ctx:
+            Square.save_to_file()
+
+        with self.assertRaises(TypeError) as ctx:
+            Rectangle.save_to_file()
+
     def test_calling_save_to_file_with_more_than_one_argument(self):
         """ testing save_to_file class method """
 
         with self.assertRaises(TypeError) as ctx:
             Base.save_to_file([], [])
+
+        with self.assertRaises(TypeError) as ctx:
+            Square.save_to_file([], [])
+
+        with self.assertRaises(TypeError) as ctx:
+            Rectangle.save_to_file([], [])
 
     def test_the_use_of_one_object_list_as_argument(self):
         """ testing save_to_file class method """
@@ -313,6 +325,16 @@ class BaseTest(unittest.TestCase):
 
     def test_the_use_of_multiple_same_base_object_list_as_argument(self):
         """ testing save_to_file class method """
+
+        r1 = Square(1, 2)
+        r2 = Square(3, 4)
+        Square.save_to_file([r1, r2])
+        with open("Square.json", "r") as file:
+            self.assertEqual(
+                             file.read(),
+                             json.dumps([
+                                         r1.to_dictionary(),
+                                         r2.to_dictionary()]))
 
         r1 = Rectangle(1, 2)
         r2 = Rectangle(3, 4)
