@@ -297,7 +297,7 @@ class BaseTest(unittest.TestCase):
         with open("Rectangle.json", "r") as file:
             self.assertEqual(file.read(), json.dumps([r.to_dictionary()]))
 
-        r = Square(1, 2)
+        r = Square(1)
         Square.save_to_file([r])
         with open("Square.json", "r") as file:
             self.assertEqual(file.read(), json.dumps([r.to_dictionary()]))
