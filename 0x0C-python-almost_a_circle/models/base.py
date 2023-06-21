@@ -5,6 +5,7 @@ Contains a Base class
 """
 
 import json
+import csv
 import os
 
 
@@ -90,3 +91,48 @@ class Base():
             dict_list = cls.from_json_string(json_string)
 
             return [cls.create(**i) for i in dict_list]
+
+    @classmethod
+    def save_to_file_csv(cls, list_objs):
+        """ serializes into csv file  """
+
+        cls_name = cls.__name__
+        filename = f"{cls_name}.csv"
+        with open(filename, "w", newline="") as file:
+
+            if list_objs is None or list_objs == []:
+                file.write("[]")
+                return
+
+            if cls_name == "Rectangle":
+                csv_format = ["id", "width", "height", "x", "y"]
+            if cls_name == "Square":
+                csv_format = ["id", "size", "x", "y"]
+
+            writer = csv.DictWriter(file, fieldnames=csv_format)
+            for obj in list_objs:
+                writer.writerow(obj.to_dictionary())
+
+    @classmethod
+    def load_from_file_csv(cls):
+        """ deserializes into csv file  """
+
+        cls_name = cls.__name__
+        filename = f"{cls_name}.csv"
+        if not os.path.exists(filename):
+            return []
+
+        with open(filename, "r", newline="") as file:
+            reader = csv.reader(file)
+            row_list = []
+            for row in reader:
+                if len(row) == 4:
+                    obj = cls(1)
+                    csv_format = ["id", "size", "x", "y"]
+                else:
+                    obj = cls(1, 1)
+                    csv_format = ["id", "width", "height", "x", "y"]
+                new_row = [int(i) for i in row]
+                obj.update(**dict(zip(csv_format, new_row)))
+                row_list.append(obj)
+            return row_list

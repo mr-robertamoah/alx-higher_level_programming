@@ -18,7 +18,14 @@ class BaseTest(unittest.TestCase):
 
     @classmethod
     def tearDown(cls):
-        paths = ["Base.json", "Rectangle.json", "Square.json"]
+        paths = [
+                 "Base.json",
+                 "Rectangle.json",
+                 "Square.json",
+                 "Base.csv",
+                 "Rectangle.csv",
+                 "Square.csv"
+                ]
         for path in paths:
             if os.path.exists(path):
                 os.remove(path)
@@ -670,6 +677,307 @@ class BaseTest(unittest.TestCase):
             json.dump({"a": 1}, file)
         with self.assertRaises(TypeError):
             Rectangle.load_from_file()
+
+    # save_to_file_csv -----------------------------
+
+    def test_file_is_overwritten_when_save_to_file_csv_is_called(self):
+        """ testing save_to_file_csv class method """
+
+        string = "hi, there"
+        with open("Rectangle.csv", "w") as file:
+            file.write(string)
+
+        Rectangle.save_to_file_csv([Rectangle(1, 2)])
+        with open("Rectangle.csv", "r") as file:
+            self.assertNotEqual(file.read(), string)
+
+    def test_file_is_created_when_save_to_file_csv_is_called(self):
+        """ testing save_to_file_csv class method """
+
+        string = "Rectangle.csv"
+        if os.path.exists(string):
+            os.remove(string)
+
+        r = Rectangle(1, 2)
+        Rectangle.save_to_file_csv([r])
+        with open("Rectangle.csv", "r") as file:
+            self.assertTrue(os.path.exists(string))
+
+    def test_can_save_when_save_to_file_csv_is_called_none(self):
+        """ testing save_to_file_csv class method """
+
+        Rectangle.save_to_file_csv(None)
+        with open("Rectangle.csv", "r") as file:
+            self.assertEqual(file.read(), "[]")
+
+    def test_can_save_when_save_to_file_csv_is_called_with_empty_list(self):
+        """ testing save_to_file_csv class method """
+
+        Rectangle.save_to_file_csv([])
+        with open("Rectangle.csv", "r") as file:
+            self.assertEqual(file.read(), "[]")
+
+    def test_can_save_in_base_csv(self):
+        """ testing save_to_file_csv class method """
+
+        Base.save_to_file_csv([])
+        with open("Base.csv", "r") as file:
+            self.assertEqual(file.read(), "[]")
+
+    def test_can_save_in_rectangle_csv(self):
+        """ testing save_to_file_csv class method """
+
+        Rectangle.save_to_file_csv([])
+        with open("Rectangle.csv", "r") as file:
+            self.assertEqual(file.read(), "[]")
+
+    def test_can_save_in_square_csv(self):
+        """ testing save_to_file_csv class method """
+
+        Square.save_to_file_csv([])
+        with open("Square.csv", "r") as file:
+            self.assertEqual(file.read(), "[]")
+
+    def test_calling_save_to_file_csv_with_no_arguments(self):
+        """ testing save_to_file_csv class method """
+
+        with self.assertRaises(TypeError) as ctx:
+            Base.save_to_file_csv()
+
+    def test_calling_save_to_file_csv_with_more_than_one_argument(self):
+        """ testing save_to_file_csv class method """
+
+        with self.assertRaises(TypeError) as ctx:
+            Base.save_to_file_csv([], [])
+
+    def test_the_use_of_one_object_list_as_argument(self):
+        """ testing save_to_file_csv class method """
+
+        r = Rectangle(1, 2)
+        Rectangle.save_to_file_csv([r])
+        with open("Rectangle.csv", "r") as file:
+            self.assertEqual(
+                             file.read(),
+                             "".join(
+                                     str(r.to_dictionary().values())
+                                     .replace(" ", "")
+                                     .replace("dict_values", "")
+                                     .replace("[", "")
+                                     .replace("]", "")
+                                     .replace("(", "")
+                                     .replace(")", "")) + "\n")
+
+    def test_cannot_use_base_class_object_in_list_as_argument(self):
+        """ testing save_to_file_csv class method """
+
+        r2 = Base(3)
+        with self.assertRaises(AttributeError):
+            Rectangle.save_to_file_csv([r2])
+            with open("Rectangle.csv", "r") as file:
+                self.assertEqual(
+                                 file.read(),
+                                 json.dumps([r2.to_dictionary().values()]))
+
+    def test_the_use_of_multiple_same_base_object_list_as_argument(self):
+        """ testing save_to_file_csv class method """
+
+        r1 = Rectangle(1, 2)
+        r2 = Rectangle(3, 4)
+        Rectangle.save_to_file_csv([r1, r2])
+        with open("Rectangle.csv", "r") as file:
+            self.assertTrue(str([
+                                 r1.to_dictionary().values(),
+                                 r2.to_dictionary().values()])
+                            .find(file.read()))
+
+    def test_cannot_use_multiple_differemt_base_object_list_as_argument(self):
+        """ testing save_to_file_csv class method """
+
+        r1 = Rectangle(1, 2)
+        r2 = Square(3, 4)
+        with self.assertRaises(ValueError):
+            Rectangle.save_to_file_csv([r1, r2])
+        with open("Rectangle.csv", "r") as file:
+            self.assertEqual(
+                             file.read(),
+                             str(r1.id) + ",1,2,0,0\n")
+
+    def test_the_use_of_multiple_different_objects_list_as_argument(self):
+        """ testing save_to_file_csv class method """
+
+        r1 = Rectangle(1, 2)
+        r2 = "string"
+        with self.assertRaises(AttributeError) as ctx:
+            Rectangle.save_to_file_csv([r1, r2])
+
+        r2 = 1
+        with self.assertRaises(AttributeError) as ctx:
+            Rectangle.save_to_file_csv([r1, r2])
+
+        r2 = 2.4
+        with self.assertRaises(AttributeError) as ctx:
+            Rectangle.save_to_file_csv([r1, r2])
+
+        r2 = (1, )
+        with self.assertRaises(AttributeError) as ctx:
+            Rectangle.save_to_file_csv([r1, r2])
+
+        r2 = {1, 2}
+        with self.assertRaises(AttributeError) as ctx:
+            Rectangle.save_to_file_csv([r1, r2])
+
+        r2 = {"a": 1, "b": 3}
+        with self.assertRaises(AttributeError) as ctx:
+            Rectangle.save_to_file_csv([r1, r2])
+
+        r2 = frozenset({2, 3})
+        with self.assertRaises(AttributeError) as ctx:
+            Rectangle.save_to_file_csv([r1, r2])
+
+    def test_the_use_non_list_as_argument(self):
+        """ testing save_to_file_csv class method """
+
+        r = "string"
+        with self.assertRaises(AttributeError) as ctx:
+            Rectangle.save_to_file_csv(r)
+
+        r = 1
+        with self.assertRaises(TypeError) as ctx:
+            Rectangle.save_to_file_csv(r)
+
+        r = 3.5
+        with self.assertRaises(TypeError) as ctx:
+            Rectangle.save_to_file_csv(r)
+
+        r = (1, )
+        with self.assertRaises(AttributeError) as ctx:
+            Rectangle.save_to_file_csv(r)
+
+        r = {1, 3}
+        with self.assertRaises(AttributeError) as ctx:
+            Rectangle.save_to_file_csv(r)
+
+        r = {"a": 1, "v": 3}
+        with self.assertRaises(AttributeError) as ctx:
+            Rectangle.save_to_file_csv(r)
+
+        r = frozenset({1, 3})
+        with self.assertRaises(AttributeError) as ctx:
+            Rectangle.save_to_file_csv(r)
+
+    # load_from_file_csv -------------------------------
+
+    def test_cannot_call_load_from_file_csv_with_arguments(self):
+        """ testing load_from_file_csv class method """
+
+        with self.assertRaises(TypeError):
+            Base.load_from_file_csv([])
+
+    def test_cannot_save_to_or_load_from_file_csv_depends_on_base_class(self):
+        """ testing load_from_file_csv class method """
+
+        r = Base(1)
+        with self.assertRaises(AttributeError):
+            Base.save_to_file([r])
+            items = Base.load_from_file_csv()
+            self.assertIsInstance(items, list)
+            for i in items:
+                self.assertIsInstance(i, Base)
+
+    def test_can_create_instance_of_different_type(self):
+        """ testing load_from_file_csv class method """
+
+        r = Rectangle(1, 2)
+        self.assertIsInstance(r, Rectangle)
+        Square.save_to_file([r])
+        items = Square.load_from_file_csv()
+        self.assertIsInstance(items, list)
+        for i in items:
+            self.assertIsInstance(i, Square)
+
+        r = Square(1, 2)
+        self.assertIsInstance(r, Square)
+        Rectangle.save_to_file([r])
+        items = Rectangle.load_from_file_csv()
+        self.assertIsInstance(items, list)
+        for i in items:
+            self.assertIsInstance(i, Rectangle)
+
+    def test_instances_of_load_from_file_csv_depend_on_class_used(self):
+        """ testing load_from_file_csv class method """
+
+        r = Base(1)
+        with open("Base.json", "w") as file:
+            dictionary = {}
+            dictionary["id"] = r.id
+            json.dump([dictionary], file)
+
+        items = Base.load_from_file_csv()
+        self.assertIsInstance(items, list)
+        for i in items:
+            self.assertIsInstance(i, Base)
+
+        r = Rectangle(1, 2)
+        Rectangle.save_to_file([r])
+        items = Rectangle.load_from_file_csv()
+        self.assertIsInstance(items, list)
+        for i in items:
+            self.assertIsInstance(i, Rectangle)
+
+        r = Square(1, 2)
+        Square.save_to_file([r])
+        items = Square.load_from_file_csv()
+        self.assertIsInstance(items, list)
+        for i in items:
+            self.assertIsInstance(i, Square)
+
+        r1 = Rectangle(1, 2)
+        r2 = Square(1, 2)
+        Square.save_to_file([r1, r2])
+        items = Square.load_from_file_csv()
+        self.assertIsInstance(items, list)
+        for i in items:
+            self.assertIsInstance(i, (Rectangle, Square))
+
+    def test_returns_empty_list_if_there_is_no_file(self):
+        """ testing load_from_file_csv class method """
+
+        filename = "Rectangle.json"
+        if os.path.exists(filename):
+            os.remove(filename)
+
+        item = Rectangle.load_from_file_csv()
+        self.assertIsInstance(item, list)
+        self.assertEqual(len(item), 0)
+
+    def tes_returns_empty_list_for_wrong_file_content(self):
+        """ testing load_from_file_csv class method """
+
+        filename = "Rectangle.json"
+        with open(filename, "w") as file:
+            json.dump(1, file)
+            result = Rectangle.load_from_file_csv()
+            self.assertEqual(result, [])
+
+        with open(filename, "w") as file:
+            json.dump(1.4, file)
+            result = Rectangle.load_from_file_csv()
+            self.assertEqual(result, [])
+
+        with open(filename, "w") as file:
+            json.dump("string", file)
+            Rectangle.load_from_file_csv()
+            self.assertEqual(result, [])
+
+        with open(filename, "w") as file:
+            json.dump((1, ), file)
+            Rectangle.load_from_file_csv()
+            self.assertEqual(result, [])
+
+        with open(filename, "w") as file:
+            json.dump({"a": 1}, file)
+            Rectangle.load_from_file_csv()
+            self.assertEqual(result, [])
 
 
 if __name__ == "__main__":
