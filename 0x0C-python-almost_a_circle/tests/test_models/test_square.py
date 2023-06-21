@@ -24,11 +24,26 @@ class SquareTest(unittest.TestCase):
         with self.assertRaises(TypeError) as ctx:
             square = Square(1, 2, 3, 4, 5)
 
-    def test_can_initialize_with_invalid_value_for_an_argument(self):
+    def test_cannot_initialize_with_invalid_value_for_an_argument(self):
         """ check if Square is properly initialized """
 
         with self.assertRaises(TypeError) as ctx:
             square = Square("1", 2, 3)
+
+        with self.assertRaises(TypeError) as ctx:
+            square = Square(1, "2", 3)
+
+        with self.assertRaises(TypeError) as ctx:
+            square = Square(1, 2, "3")
+
+        with self.assertRaises(ValueError) as ctx:
+            square = Square(-1, 2, 3)
+
+        with self.assertRaises(ValueError) as ctx:
+            square = Square(1, -2, 3)
+
+        with self.assertRaises(ValueError) as ctx:
+            square = Square(1, 2, -3)
 
     def test_can_initialize_with_one_argument(self):
         """ check if Square is properly initialized """

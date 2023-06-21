@@ -241,8 +241,16 @@ class BaseTest(unittest.TestCase):
         with open("Rectangle.json", "r") as file:
             self.assertEqual(file.read(), "[]")
 
+        Square.save_to_file(None)
+        with open("Square.json", "r") as file:
+            self.assertEqual(file.read(), "[]")
+
     def test_can_save_when_save_to_file_is_called_with_empty_list(self):
         """ testing save_to_file class method """
+
+        Square.save_to_file([])
+        with open("Square.json", "r") as file:
+            self.assertEqual(file.read(), "[]")
 
         Rectangle.save_to_file([])
         with open("Rectangle.json", "r") as file:

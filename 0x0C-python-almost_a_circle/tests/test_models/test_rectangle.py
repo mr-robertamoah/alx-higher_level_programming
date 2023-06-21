@@ -27,7 +27,28 @@ class RectangleTest(unittest.TestCase):
         """ check if Rectangle is properly initialized """
 
         with self.assertRaises(TypeError) as ctx:
-            rectangle = Rectangle("1", 2, 3, 4, 5)
+            rectangle = Rectangle("1", 2, 3, 4)
+
+        with self.assertRaises(TypeError) as ctx:
+            rectangle = Rectangle(1, "2", 3, 4)
+
+        with self.assertRaises(TypeError) as ctx:
+            rectangle = Rectangle(1, 2, "3", 4)
+
+        with self.assertRaises(TypeError) as ctx:
+            rectangle = Rectangle(1, 2, 3, "4")
+
+        with self.assertRaises(ValueError) as ctx:
+            rectangle = Rectangle(-1, 2, 3, 4)
+
+        with self.assertRaises(ValueError) as ctx:
+            rectangle = Rectangle(1, -2, 3, 4)
+
+        with self.assertRaises(ValueError) as ctx:
+            rectangle = Rectangle(1, 2, -3, 4)
+
+        with self.assertRaises(ValueError) as ctx:
+            rectangle = Rectangle(1, 2, 3, -4)
 
     def test_can_initialize_with_more_that_five_argument(self):
         """ check if Rectangle is properly initialized """
