@@ -309,10 +309,11 @@ class BaseTest(unittest.TestCase):
         with open("Rectangle.json", "r") as file:
             self.assertEqual(file.read(), json.dumps([r.to_dictionary()]))
 
-        r = Square(1)
-        Square.save_to_file([r])
+        Square.save_to_file([Square(1)])
         with open("Square.json", "r") as file:
-            self.assertEqual(file.read(), json.dumps([r.to_dictionary()]))
+            content = file.read()
+            r = Square.create(Square.from_json_string(content))[0]
+            self.assertEqual(content, json.dumps([r.to_dictionary()]))
 
     def test_cannot_use_base_class_object_in_list_as_argument(self):
         """ testing save_to_file class method """
