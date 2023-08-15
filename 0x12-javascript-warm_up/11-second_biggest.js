@@ -1,6 +1,6 @@
 #!/usr/bin/node
 if (process.argv.length < 4) {
-  console.log(1);
+  console.log(0);
 } else {
   let i;
   const nums = [];
@@ -15,7 +15,7 @@ if (process.argv.length < 4) {
   }
   let secondn = nums[0];
   for (i = 0; i < nums.length; i++) {
-    if (secondn < nums[i] && nums[i] !== maxn) {
+    if ((secondn === maxn || secondn < nums[i]) && nums[i] !== maxn) {
       secondn = nums[i];
     }
   }
