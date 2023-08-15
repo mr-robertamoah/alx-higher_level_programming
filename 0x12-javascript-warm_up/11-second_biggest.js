@@ -5,7 +5,7 @@ if (process.argv.length < 4) {
   let i;
   const nums = [];
   for (i = 2; i < process.argv.length; i++) {
-    nums.push(process.argv[i]);
+    nums.push(parseInt(process.argv[i]));
   }
   let maxn = nums[0];
   for (let i = 0; i < nums.length; i++) {
