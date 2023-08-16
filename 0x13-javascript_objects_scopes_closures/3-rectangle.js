@@ -1,4 +1,4 @@
-#!/usr/bin/node
+!/usr/bin/node
 class Rectangle {
   constructor (w, h) {
     w = parseInt(w);
@@ -12,9 +12,9 @@ class Rectangle {
 
   print () {
     let x = '';
-    for (let i = 0; i < this.h; i++) {
+    for (let i = 0; i < this.height; i++) {
       x = '';
-      for (let j = 0; j < this.w; j++) {
+      for (let j = 0; j < this.width; j++) {
         x = x + 'X';
       }
       console.log(x);
