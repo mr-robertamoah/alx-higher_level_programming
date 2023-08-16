@@ -1,4 +1,4 @@
-!/usr/bin/node
+#!/usr/bin/node
 class Rectangle {
   constructor (w, h) {
     w = parseInt(w);
