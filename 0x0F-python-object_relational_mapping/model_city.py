@@ -6,8 +6,8 @@ an instance Base = declarative_base()
 """
 
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
-from sqlalchemy import Column, Integer, String, MetaData, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey
+from model_state import Base
 
 
 class City(Base):
