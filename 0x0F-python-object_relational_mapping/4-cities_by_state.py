@@ -13,8 +13,9 @@ if __name__ == "__main__":
             db=argv[3], host="localhost", port=3306)
     cur = db.cursor()
     cur.execute(
-        "SELECT * FROM states WHERE states.name = '{}' ORDER BY states.id"
-        .format(argv[4])
+            """SELECT cities.id, cities.name, states.name FROM cities
+            LEFT JOIN states ON cities.state_id = states.id
+            """
     )
     rows = cur.fetchall()
     for row in rows:
