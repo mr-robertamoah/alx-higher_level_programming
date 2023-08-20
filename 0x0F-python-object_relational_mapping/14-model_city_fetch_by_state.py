@@ -15,7 +15,7 @@ if __name__ == "__main__":
     Base.metadata.create_all(engine)
     Session = sessionmaker(bind=engine)
     session = Session()
-    for instance in session.query(State.name, Cities.id, Cities.name)
-    .filter(State.name.like("%a%")):
+    for instance in (session.query(State.name, Cities.id, Cities.name)
+                     .filter(State.id == City.state_id)):
         print("{} ({}) {}".format(instance[0], instance[1], instance[2]))
     session.commit()
