@@ -14,8 +14,4 @@ if __name__ == "__main__":
     url = "https://api.github.com/user"
     arg = (argv[1], argv[2])
     res = requests.get(url, auth=arg)
-    r = res.json()
-    if hasattr(r, "id"):
-        print(r["id"])
-    else:
-        print(None)
+    print(res.json().get("id"))
