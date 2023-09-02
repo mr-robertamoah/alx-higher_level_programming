@@ -13,9 +13,9 @@ if __name__ == "__main__":
     with urllib.request.urlopen(url) as response:
         r = response.read()
         print("Body response:")
-        print("    - type: ", end="")
+        print("\t- type: ", end="")
         print(type(r))
-        print("    - content: ", end="")
+        print("\t- content: ", end="")
         print(r)
-        print("    - utf8 content: ", end="")
+        print("\t- utf8 content: ", end="")
         print(r.decode("utf-8"))
