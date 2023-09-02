@@ -12,10 +12,8 @@ from sys import argv
 
 if __name__ == "__main__":
     url = argv[1]
-    data = {}
-    data["email"] = argv[2]
     res = requests.get(url)
-    if int(res.status_code) >= 400:
+    if res.status_code >= 400:
         print("Error code: {}".format(res.status_code))
     else:
         print(res.text)
