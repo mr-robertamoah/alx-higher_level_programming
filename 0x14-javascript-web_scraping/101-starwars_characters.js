@@ -2,33 +2,43 @@
 
 const request = require('request');
 
-const url = 'https://swapi-api.alx-tools.com/api/films/' + process.argv[2];
-request(url, (err, response, body) => {
-  if (err) {
-    console.log(err);
-    return;
-  }
-
-  if (response.statusCode !== 200) {
-    console.log('Error code: ' + response.statusCode);
-    return;
-  }
-
-  const film = JSON.parse(body);
-  let characters = []
-  for (const j in film.characters) {
-    const character = film.characters[j];
+function getCharacterName (character) {
+  return new Promise((resolve, reject) => {
     request.get(character, (err, res, content) => {
       if (err) {
-        console.log(err);
-        return;
+        reject(err);
       }
-      characters.push({name: JSON.parse(content).name, id: j + 1});
+      resolve(JSON.parse(content).name);
     });
+  });
+}
+
+async function getFilmNames (url) {
+  try {
+    const film = await new Promise((resolve, reject) => {
+      request(url, (err, response, body) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+
+        if (response.statusCode !== 200) {
+          reject(new Error('Error code: ' + response.statusCode));
+          return;
+        }
+
+        resolve(JSON.parse(body));
+      });
+    });
+
+    for (const j in film.characters) {
+      const character = film.characters[j];
+      const name = await getCharacterName(character);
+      console.log(name);
+    }
+  } catch (err) {
+    console.log(err);
   }
-  console.log(characters)
-  characters = characters.sort((a, b) => a.id - b.id)
-  for (let i in characters) {
-    console.log(characters[i].name)
-  }
-});
+}
+
+getFilmNames('https://swapi-api.alx-tools.com/api/films/' + process.argv[2]);
