@@ -9,5 +9,5 @@ fs.readFile(filename, 'utf-8', (err, body) => {
     return;
   }
 
-  console.log(body, '\n');
+  console.log(body);
 });
